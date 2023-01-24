@@ -1,0 +1,70 @@
+-Pentru implementarea temei am folosit scheletul oferit in laboratorul 10
+-Am adaugat modificarile necesare pentru functionarea temei:
+	-Am implementat functia compute_delete_request in fisierul requests.c
+	-Aceasta functie este asemanatoare cu compute_get_request dar este 
+	folosita pentru procesarea unui string DELETE request
+	-fiecarei functie din fisierul requests.c i-am adaugat un nou
+	parametru de tip char* (TWJ) pentru procesarea token-ului
+	de autentificare in biblioteca
+
+-Am ales sa implementez tema in limbajul C si pentru parsarea
+obiectelor de tip json am utilizat biblioteca parson
+
+-Pentru parsarea obtinerea cookie-ului de sesiune am folosit 
+un vector de tip dublu in pointer in care am stocat la pozitia 0
+continutul obiectului json obtinuit
+-Vectorul l-am parsat ca parametru in functia compute_post_request
+
+-Functia srtrremove am folosit-o pentru prelucrarea token-ului de autentificare
+
+-Functia fatal am folosit-o pentru verificarea unui posibil comportament ciudat
+al unor functii
+
+-Pentru comanda register:
+	-Am prelucrat stringurile necesare in obiecte json
+	-Am trimis o cerere de tip POST request
+	-Am procesat mesajul obtinut
+
+-Pentru comanda login:
+	-Am repetat pasi de la comanda anterioara
+	-Am prelucat cookie-ul de sesiune
+	-Am stocat cookie-ul intr-un pointer de tip char
+
+-Pentru comanda enter_library:
+	-Am trimis o cerere de tip GET request cu cookie-ul de sesiube obtinut
+	-Am procesat mesajul obtinut
+	-Am prelucrat string-ul primit ca raspuns pana am obtinut token-ul 
+	de acces in biblioteca
+
+-Pentru comanda get_books:
+	-Am trimis o cere de tip GET request in care am parsat token-ul de acces
+	-Am procesat mesajul primit de la server
+	-Am afisat lista de obiecte json intoarsa in mesaj
+
+Pentru comanda get_book:
+	-Am folosti variabila URL pentru a stoca url-ul comenzii get_books
+	-Am concatenat string-ul de id dat ca input la URL si l-am dat ca parametru
+	pentru cererea GET request
+	-Am prelucarat mesajul obtinut de la server si am afista informatiile despre carte
+
+Pentru comanda add_book:
+	-Am dat ca input informatiile despre cartea ce urmea sa fie adaugata
+	-in variabila charValue am stocak continutul variabilei de tip int
+	page_count, si am dat-o ca parametrul la functia de creare de obiect json
+	-am trimis o cere de tip POST request si am parsat obiectul json prin intermediul
+	vectorului json_buffer
+
+Pentru comanda delete_book:
+	-Am prelucrat url-ul asemantor ca la comanda get_book
+	-Am trimis o cere de tip DELETE request
+	-Am procesat mesajul primit de la server
+
+Pentru comanda logout:
+	-Am trimis o cerere de tip GET request
+	-Am procesat mesajul returnat de server
+
+Pentru comanda exit:
+	-Comanda opreste executia programului
+
+-Pentru fiecare raspuns trimis de server a folosti functia strstr pentru a verifica
+si afisa daca exista vreun mesaj de eroare primit
